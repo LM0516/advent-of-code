@@ -14,15 +14,24 @@ def rotations(file_name):
 def main():
     file_name = "rotations.txt"
     data = rotations(file_name)
+    value = 50
+    count = 0
 
     for i in range(len(data)):
+        if value == 0:
+            count += 1
+
         match data[i][0]:
             case "L":
-                print("Left:")
-                print(data[i][1])
+                value -= data[i][1]
+                if value < 0:
+                    value = 100 + value
             case "R":
-                print("Right:")
-                print(data[i][1])
+                value += data[i][1]
+                if value > 99:
+                    value = value - 100
+
+    print(count)
 
 
 if __name__ == "__main__":
