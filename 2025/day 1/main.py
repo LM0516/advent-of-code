@@ -22,8 +22,10 @@ def part_two(data, value, count):
     for d in data:
         # lap, value = value // d % 100
         lap, value = divmod(value + d, 100)
-        print(f"{abs(lap)} - {value}")
+        # print(f"{abs(lap)} - {value}")
         laps.append(abs(lap))
+        if value == 0 and lap == 0:
+            count += 1
         if value == 0:
             count += 1
 
