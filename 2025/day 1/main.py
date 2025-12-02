@@ -3,26 +3,31 @@ import numpy as np
 
 def rotations(file_name):
     data = np.loadtxt(file_name, dtype=str, unpack=True)
+    data = [int(d.replace("R", "").replace("L", "-")) for d in data]
 
-    # Split string and number
-    print(type(data))
-    split_data = [(item[0], int(item[1:])) for item in data]
-
-    return split_data
+    return data
 
 
 def part_one(data, value, count):
-    for i in range(len(data)):
-        match data[i][0]:
-            case "L":
-                value = (value - data[i][1]) % 100
-            case "R":
-                value = (value + data[i][1]) % 100
-
+    for d in data:
+        value = (value + d) % 100
         if value == 0:
             count += 1
 
     print(count)
+
+
+def part_two(data, value, count):
+    laps = []
+    for d in data:
+        # lap, value = value // d % 100
+        lap, value = divmod(value + d, 100)
+        print(f"{abs(lap)} - {value}")
+        laps.append(abs(lap))
+        if value == 0:
+            count += 1
+
+    print(count + sum(laps))
 
 
 def main():
@@ -31,7 +36,10 @@ def main():
     value = 50
     count = 0
 
+    print("=== Part One ===")
     part_one(data, value, count)
+    print("=== Part Two ===")
+    part_two(data, value, count)
 
 
 if __name__ == "__main__":
